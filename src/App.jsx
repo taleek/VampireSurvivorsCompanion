@@ -645,7 +645,26 @@ export default function App() {
                     boxShadow: ready ? `0 0 12px ${colors.gold}` : "none",
                   }}
                 >
-                  <h3>{evo.result}</h3>
+                  <h3
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      {getImagePath(evo.result) && (
+                        <img
+                          src={getImagePath(evo.result)}
+                          alt={evo.result}
+                          style={{
+                            width: "36px",
+                            height: "36px",
+                            objectFit: "contain",
+                          }}
+                        />
+                      )}
+                    {evo.result}
+                    </h3>
 
                   {evo.requirements.map((req) =>
                     levelControl(req.item, getMaxLevel(req.item), req.level),
@@ -720,7 +739,27 @@ export default function App() {
                       opacity: 0.95,
                     }}
                   >
-                    <h3>{evo.result}</h3>
+                    <h3
+                      style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      }}
+                    >
+                      {getImagePath(evo.result) && (
+                        <img
+                          src={getImagePath(evo.result)}
+                          alt={evo.result}
+                          style={{
+                            width: "36px",
+                            height: "36px",
+                            objectFit: "contain",
+                          }}
+                        />
+                      )}
+                      
+                      {evo.result}
+                    </h3>
 
                     {evo.requirements.map((req) =>
                       levelControl(req.item, getMaxLevel(req.item), req.level),
