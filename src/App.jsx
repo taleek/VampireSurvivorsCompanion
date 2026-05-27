@@ -780,6 +780,21 @@ export default function App() {
           </div>
         </div>
       </div>
+      <div
+        style={{
+          marginTop: "40px",
+          paddingTop: "20px",
+          borderTop: `1px solid ${colors.border}`,
+          textAlign: "center",
+          fontSize: "12px",
+          opacity: 0.7,
+          maxWidth: "900px",
+        }}
+      >
+        Fan-made companion app for Vampire Survivors. <br />
+        Vampire Survivors and all related assets are property of poncle. <br />
+        This project is non-commercial and not affiliated with or endorsed by poncle.
+      </div>
     </div>
   );
 }
