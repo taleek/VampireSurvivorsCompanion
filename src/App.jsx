@@ -2,6 +2,10 @@ import { useState } from "react";
 import { items } from "./data/items";
 import { evolutions } from "./data/evolutions";
 
+const readyGlow = {
+  animation: "pulseGlow 4.0s infinite ease-in-out",
+};
+
 const colors = {
   background: "#000000",
   panel: "#220000",
@@ -22,6 +26,25 @@ const colors = {
   subtext: "#C8AFA0",
   warning: "#ff5555",
   gold: "#d6a84f",
+  sectionText: "#E6D7C3",
+};
+
+const toggleButtonStyle = {
+  transition: "all 0.2s ease",
+  boxShadow: "0 0 8px rgba(255,0,0,0.2)",
+  marginTop: "15px",
+  marginBottom: "10px",
+  padding: "10px",
+  background: colors.button,
+  color: colors.sectionText,
+  border: `1px solid ${colors.gold}`,
+  borderRadius: "6px",
+  width: "100%",
+  cursor: "pointer",
+  fontWeight: "bold",
+  fontFamily: "'Cinzel', serif",
+  letterSpacing: "0.5px",
+  textTransform: "uppercase",
 };
 
 const sets = [
@@ -83,7 +106,12 @@ export default function App() {
     width: "100%",
     padding: "9px 10px",
     background: colors.button,
-    color: colors.text,
+    fontFamily: "'Cinzel', serif",
+    letterSpacing: "0.5px",
+    textTransform: "uppercase",
+    transition: "all 0.2s ease",
+    boxShadow: `0 0 8px ${colors.borderSoft}`,
+    color: colors.sectionText,
     border: `1px solid ${colors.gold}`,
     borderRadius: "6px",
     textAlign: "left",
@@ -305,6 +333,12 @@ export default function App() {
 
     return (
       <button
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+        }
         key={item}
         onClick={() => {
           if (items[item]?.type === "evolvedWeapon") {
@@ -314,6 +348,8 @@ export default function App() {
           }
         }}
         style={{
+          transition: "all 0.2s ease",
+          boxShadow: "0 0 8px rgba(255, 0, 0, 0.2)",
           margin: "5px",
           padding: "10px",
           background,
@@ -327,7 +363,10 @@ export default function App() {
           minWidth: "95px",
           minHeight: "80px",
           cursor: "pointer",
-          boxShadow: isOwned || isEvolved || isPlannedEvo ? `0 0 8px ${borderColor}` : "none",
+          boxShadow:
+            isOwned || isEvolved || isPlannedEvo
+              ? `0 0 8px ${borderColor}`
+              : "none",
         }}
       >
         {imagePath && (
@@ -343,7 +382,18 @@ export default function App() {
           />
         )}
 
-        <span>{item}</span>
+        <span
+          style={{
+            fontFamily: "'Cinzel', serif",
+            color: colors.sectionText,
+            fontSize: "14px",
+            letterSpacing: "0.3px",
+            textAlign: "center",
+            textShadow: "0 0 4px rgba(0,0,0,0.6)",
+          }}
+        >
+          {item}
+        </span>
       </button>
     );
   };
@@ -386,8 +436,16 @@ export default function App() {
           <span style={{ color: colors.subtext }}>{requirementText}</span>
           <br />
           <button
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+            }
             onClick={() => decreaseLevel(name)}
             style={{
+              transition: "all 0.2s ease",
+              boxShadow: "0 0 8px rgba(255,0,0,0.2)",
               marginRight: "4px",
               background: colors.button,
               color: colors.text,
@@ -399,8 +457,16 @@ export default function App() {
             -
           </button>
           <button
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+            }
             onClick={() => increaseLevel(name, max)}
             style={{
+              transition: "all 0.2s ease",
+              boxShadow: "0 0 8px rgba(255,0,0,0.2)",
               background: colors.buttonAlt,
               color: colors.text,
               border: `1px solid ${colors.gold}`,
@@ -418,6 +484,12 @@ export default function App() {
   const setSection = (sectionType, setName, sectionItems) => (
     <div key={`${sectionType}-${setName}`} style={{ marginBottom: "10px" }}>
       <button
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+        }
         onClick={() => toggleSection(sectionType, setName)}
         style={sectionButtonStyle}
       >
@@ -440,7 +512,24 @@ export default function App() {
   return (
     <div
       style={{
-        background: colors.background,
+        backgroundImage: `
+          radial-gradient(
+            circle at top,
+            #2a0000 0%,
+            #120000 35%,
+            #000000 100%
+          ),
+          repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.015) 0px,
+            rgba(255,255,255,0.015) 1px,
+            transparent 1px,
+            transparent 6px
+          )
+        `,
+
+        backgroundBlendMode: "overlay",
+
         color: colors.text,
         minHeight: "100vh",
         padding: "20px",
@@ -470,12 +559,21 @@ export default function App() {
         </div>
 
         <button
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+          }
           onClick={resetRun}
           style={{
+            transition: "all 0.2s ease",
+            boxShadow: "0 0 8px rgba(255,0,0,0.2)",
             padding: "10px 16px",
             marginBottom: "20px",
+            fontFamily: "'Cinzel', serif",
             background: colors.button,
-            color: colors.text,
+            color: colors.sectionText,
             border: `1px solid ${colors.gold}`,
             borderRadius: "8px",
             cursor: "pointer",
@@ -489,16 +587,22 @@ export default function App() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "2fr 1fr",
+            gridTemplateColumns: window.innerWidth < 900 ? "1fr" : "2fr 1fr",
             gap: "20px",
             alignItems: "start",
             width: "100%",
           }}
         >
           <div style={panelStyle}>
-            <h2 style={{ color: colors.gold }}>Weapons</h2>
-
-            <h3>Base Weapons</h3>
+            <h2
+              style={{
+                color: colors.gold,
+                fontFamily: "Cinzel, serif",
+                letterSpacing: "1px",
+              }}
+            >
+              Weapons
+            </h2>
 
             {sets.map((setName) =>
               setSection(
@@ -509,19 +613,14 @@ export default function App() {
             )}
 
             <button
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+              }
               onClick={() => setShowEvolvedWeapons(!showEvolvedWeapons)}
-              style={{
-                marginTop: "15px",
-                marginBottom: "10px",
-                padding: "10px",
-                background: colors.button,
-                color: colors.text,
-                border: `1px solid ${colors.gold}`,
-                borderRadius: "6px",
-                width: "100%",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              style={toggleButtonStyle}
             >
               {showEvolvedWeapons
                 ? "Hide Evolved Weapons ▲"
@@ -544,7 +643,15 @@ export default function App() {
           </div>
 
           <div style={panelStyle}>
-            <h2 style={{ color: colors.gold }}>Passive Items</h2>
+            <h2
+              style={{
+                color: colors.gold,
+                fontFamily: "Cinzel, serif",
+                letterSpacing: "1px",
+              }}
+            >
+              Passive Items
+            </h2>
 
             {sets.map((setName) =>
               setSection(
@@ -559,7 +666,7 @@ export default function App() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: window.innerWidth < 900 ? "1fr" : "2fr 1fr",
             gap: "20px",
             marginTop: "20px",
             alignItems: "start",
@@ -567,22 +674,46 @@ export default function App() {
           }}
         >
           <div style={panelStyle}>
-            <h2 style={{ color: colors.gold }}>Inventory</h2>
+            <h2
+              style={{
+                color: colors.gold,
+                fontFamily: "Cinzel, serif",
+                letterSpacing: "1px",
+              }}
+            >
+              Inventory
+            </h2>
 
             {owned.length === 0 && (
-              <p style={{ color: colors.subtext }}>No items yet.</p>
+              <p
+                style={{
+                  fontFamily: "'Cinzel', serif",
+                  color: colors.subtext,
+                }}
+              >
+                No items yet.
+              </p>
             )}
 
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns:
+                  window.innerWidth < 900 ? "1fr" : "2fr 1fr",
                 gap: "20px",
                 alignItems: "start",
               }}
             >
               <div>
-                <h3>Weapons</h3>
+                <h3
+                  style={{
+                    color: colors.gold,
+                    fontFamily: "Cinzel, serif",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Weapons
+                </h3>
 
                 {owned
                   .filter((item) => items[item]?.type !== "passive")
@@ -601,7 +732,15 @@ export default function App() {
               </div>
 
               <div>
-                <h3>Passive Items</h3>
+                <h3
+                  style={{
+                    color: colors.gold,
+                    fontFamily: "Cinzel, serif",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Passives
+                </h3>
 
                 {owned
                   .filter((item) => items[item]?.type === "passive")
@@ -622,11 +761,24 @@ export default function App() {
           </div>
 
           <div style={panelStyle}>
-            <h2 style={{ color: colors.gold }}>Evolution Tracker</h2>
+            <h2
+              style={{
+                color: colors.gold,
+                fontFamily: "Cinzel, serif",
+                letterSpacing: "1px",
+              }}
+            >
+              Evolution Tracker
+            </h2>
 
             {visibleEvos.length === 0 && (
-              <p style={{ color: colors.subtext }}>
-                Pick a weapon or passive item to track an evolution.
+              <p
+                style={{
+                  fontFamily: "'Cinzel', serif",
+                  color: colors.subtext,
+                }}
+              >
+                Start by selecting an item
               </p>
             )}
 
@@ -637,34 +789,36 @@ export default function App() {
                 <div
                   key={evo.result}
                   style={{
-                    border: `1px solid ${ready ? colors.gold : colors.border}`,
+                    border: ready
+                      ? `2px solid ${colors.gold}`
+                      : `1px solid ${colors.border}`,
                     borderRadius: "10px",
                     padding: "15px",
                     marginBottom: "15px",
                     background: ready ? colors.ready : colors.notReady,
-                    boxShadow: ready ? `0 0 12px ${colors.gold}` : "none",
+                    ...(ready ? readyGlow : {}),
                   }}
                 >
                   <h3
                     style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      {getImagePath(evo.result) && (
-                        <img
-                          src={getImagePath(evo.result)}
-                          alt={evo.result}
-                          style={{
-                            width: "36px",
-                            height: "36px",
-                            objectFit: "contain",
-                          }}
-                        />
-                      )}
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    {getImagePath(evo.result) && (
+                      <img
+                        src={getImagePath(evo.result)}
+                        alt={evo.result}
+                        style={{
+                          width: "36px",
+                          height: "36px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    )}
                     {evo.result}
-                    </h3>
+                  </h3>
 
                   {evo.requirements.map((req) =>
                     levelControl(req.item, getMaxLevel(req.item), req.level),
@@ -684,8 +838,18 @@ export default function App() {
 
                   {ready && (
                     <button
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.boxShadow =
+                          "0 0 15px rgba(255,0,0,0.7)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.boxShadow =
+                          "0 0 8px rgba(255,0,0,0.2)")
+                      }
                       onClick={() => evolveWeapon(evo)}
                       style={{
+                        transition: "all 0.2s ease",
+                        boxShadow: "0 0 8px rgba(255,0,0,0.2)",
                         marginTop: "10px",
                         padding: "10px",
                         background: colors.evolved,
@@ -704,23 +868,18 @@ export default function App() {
             })}
 
             <button
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+              }
               onClick={() => setShowPossibleEvos(!showPossibleEvos)}
-              style={{
-                marginTop: "15px",
-                marginBottom: "10px",
-                padding: "10px",
-                background: colors.button,
-                color: colors.text,
-                border: `1px solid ${colors.gold}`,
-                borderRadius: "6px",
-                width: "100%",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              style={toggleButtonStyle}
             >
               {showPossibleEvos
-                ? "Hide Possible Evo Paths ▲"
-                : `Show Possible Evo Paths ▼ (${possibleEvos.length})`}
+                ? "Possible Evo Paths ▲"
+                : `Possible Evo Paths ▼ (${possibleEvos.length})`}
             </button>
 
             {showPossibleEvos &&
@@ -731,7 +890,8 @@ export default function App() {
                   <div
                     key={evo.result}
                     style={{
-                      border: `1px solid ${ready ? colors.gold : colors.border}`,
+                      border: `2px solid ${colors.gold}`,
+                      boxShadow: `0 0 12px ${colors.gold}`,
                       borderRadius: "10px",
                       padding: "15px",
                       marginBottom: "15px",
@@ -741,9 +901,9 @@ export default function App() {
                   >
                     <h3
                       style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
                       }}
                     >
                       {getImagePath(evo.result) && (
@@ -757,7 +917,7 @@ export default function App() {
                           }}
                         />
                       )}
-                      
+
                       {evo.result}
                     </h3>
 
@@ -779,21 +939,23 @@ export default function App() {
               })}
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          marginTop: "40px",
-          paddingTop: "20px",
-          borderTop: `1px solid ${colors.border}`,
-          textAlign: "center",
-          fontSize: "12px",
-          opacity: 0.7,
-          maxWidth: "900px",
-        }}
-      >
-        Fan-made companion app for Vampire Survivors. <br />
-        Vampire Survivors and all related assets are property of poncle. <br />
-        This project is non-commercial and not affiliated with or endorsed by poncle.
+        <div
+          style={{
+            marginTop: "40px",
+            paddingTop: "20px",
+            borderTop: `1px solid ${colors.border}`,
+            textAlign: "center",
+            fontSize: "12px",
+            opacity: 0.7,
+            maxWidth: "900px",
+          }}
+        >
+          Fan-made companion app for Vampire Survivors. <br />
+          Vampire Survivors and all related assets are property of poncle.{" "}
+          <br />
+          This project is non-commercial and not affiliated with or endorsed by
+          poncle.
+        </div>
       </div>
     </div>
   );
