@@ -545,15 +545,26 @@ export default function App() {
           alignItems: "center",
         }}
       >
-        <div style={{ marginBottom: "20px" }}>
+        <div
+          style={{
+            position: "relative",
+            marginBottom: "20px",
+            display: "inline-block",
+          }}
+        >
           <img
-            src="/images/vampireSurvivorsMain.webp"
+            src="/images/vampireSurvivorsMain2.webp"
             alt="Vampire Survivors Run Helper"
             style={{
               maxWidth: "420px",
               width: "100%",
               height: "auto",
               display: "block",
+
+              filter: `
+        drop-shadow(0 0 12px rgba(40, 0, 0, 0.8))
+        drop-shadow(0 0 30px rgba(0, 0, 0, 0.9))
+      `,
             }}
           />
         </div>
