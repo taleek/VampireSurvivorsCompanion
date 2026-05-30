@@ -38,7 +38,7 @@ export const odeToCastlevaniaItems = {
   "Alucard Spear": { type: "weapon", set: "Ode to Castlevania", img: "/icons/alucardSpear.webp", max: 8 },
   Trident: { type: "weapon", set: "Ode to Castlevania", img: "/icons/trident.webp", max: 8 },
   "Iron Shield": { type: "weapon", set: "Ode to Castlevania", img: "/icons/ironShield.webp", max: 8 },
-  "Guardian's Targe": { type: "weapon", set: "Ode to Castlevania", img: "/icons/guardiansTarge.webp", max: 8 },
+  "Guardian's Targe": { type: "weapon", set: "Ode to Castlevania", img: "/icons/guardian'sTarge.webp", max: 8 },
   "Silver Revolver": { type: "weapon", set: "Ode to Castlevania", img: "/icons/silverRevolver.webp", max: 8 },
   Tyrfing: { type: "weapon", set: "Ode to Castlevania", img: "/icons/tyrfing.webp", max: 8 },
   Globus: { type: "weapon", set: "Ode to Castlevania", img: "/icons/globus.webp", max: 8 },

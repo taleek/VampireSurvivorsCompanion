@@ -118,7 +118,7 @@ const iconFiles = [
   "grandCross.webp",
   "greatestJubilee.webp",
   "grosMichel.png",
-  "guardian'sTarge.webp",
+  "guardian'sTarge.png",
   "gungnirSouris.webp",
   "handGrenade.webp",
   "hats.webp",
