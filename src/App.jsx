@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { items } from "./data/items";
-import { evolutions } from "./data/evolutions";
+import { items } from "./data/items/index";
+import { evolutions } from "./data/evolutions/index";
 
 const readyGlow = {
   animation: "pulseGlow 4.0s infinite ease-in-out",
@@ -179,7 +179,8 @@ export default function App() {
   const getItemsBySetAndType = (setName, type) =>
     Object.entries(items)
       .filter(([, data]) => data.set === setName && data.type === type)
-      .map(([name]) => name);
+      .map(([name]) => name)
+      .sort((a, b) => a.localeCompare(b));
 
   const getImagePath = (item) => items[item]?.img || null;
 
