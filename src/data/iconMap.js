@@ -216,6 +216,7 @@ const iconFiles = [
   "photonstorm.webp",
   "platinumWhip.webp",
   "pneumaTempestas.webp",
+  "pocketKnife.png",
   "powerOfSire.webp",
   "pressurePoint.png",
   "prismaticMissile.webp",
