@@ -202,6 +202,7 @@ const iconFiles = [
   "noFuture.webp",
   "ophion.webp",
   "opticalShot.webp",
+  "outerSaboteur.png",
   "pakoBattiliar.webp",
   "paranormalScan.webp",
   "parmAegis.png",
