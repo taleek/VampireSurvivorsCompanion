@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { items } from "./data/items/index";
 import { evolutions } from "./data/evolutions/index";
+import { resolveIcon } from "./data/iconMap";
 
 const readyGlow = {
   animation: "pulseGlow 4.0s infinite ease-in-out",
@@ -55,6 +56,7 @@ const sets = [
   "Operation Guns",
   "Emerald Diorama",
   "Ode to Castlevania",
+  "Ante Chamber",
 ];
 
 export default function App() {
@@ -83,6 +85,7 @@ export default function App() {
       "Operation Guns": false,
       "Emerald Diorama": false,
       "Ode to Castlevania": false,
+      "Ante Chamber": false,
     },
     evolvedWeapons: {
       "Base Game": true,
@@ -92,6 +95,7 @@ export default function App() {
       "Operation Guns": false,
       "Emerald Diorama": false,
       "Ode to Castlevania": false,
+      "Ante Chamber": false,
     },
     passives: {
       "Base Game": true,
@@ -101,6 +105,7 @@ export default function App() {
       "Operation Guns": false,
       "Emerald Diorama": false,
       "Ode to Castlevania": false,
+      "Ante Chamber": false,
     },
   });
 
@@ -182,7 +187,7 @@ export default function App() {
       .map(([name]) => name)
       .sort((a, b) => a.localeCompare(b));
 
-  const getImagePath = (item) => items[item]?.img || null;
+  const getImagePath = (item) => resolveIcon(items[item]?.img ?? item);
 
   const getMaxLevel = (item) => items[item]?.max || 8;
 

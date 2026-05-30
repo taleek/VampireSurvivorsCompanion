@@ -11,8 +11,8 @@ export const legacyOfTheMoonspellEvolutions = [
     result: "Godai Shuffle",
     requirements: [
       { item: "Four Seasons", level: 8 },
-      { item: "Spinach", level: 1 },
-      { item: "Candelabrador", level: 1 },
+      { item: "Spinach", level: 5 },
+      { item: "Candelabrador", level: 5 },
     ],
     consumes: ["Four Seasons"],
   },
@@ -28,7 +28,7 @@ export const legacyOfTheMoonspellEvolutions = [
     result: "J'Odore",
     requirements: [
       { item: "Mirage Robe", level: 8 },
-      { item: "Clover", level: 1 },
+      { item: "Attractorb", level: 5 },
     ],
     consumes: ["Mirage Robe"],
   },
@@ -36,7 +36,7 @@ export const legacyOfTheMoonspellEvolutions = [
     result: "Boo Roo Boolle",
     requirements: [
       { item: "108 Bocce", level: 8 },
-      { item: "Skull O'Maniac", level: 1 },
+      { item: "Spellbinder", level: 5 },
     ],
     consumes: ["108 Bocce"],
   },

@@ -115,4 +115,12 @@ export const emeraldDioramaEvolutions = [
     ],
     consumes: ["Sanguine Star"],
   },
+  {
+    result: "Emerald Wave",
+    requirements: [
+      { item: "Emerald Rapture", level: 8 },
+      { item: "Crown", level: 5 },
+    ],
+    consumes: ["Emerald Rapture"],
+  },
 ];

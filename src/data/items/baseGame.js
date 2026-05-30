@@ -172,6 +172,36 @@ export const baseGameItems = {
     img: "/icons/santaJavelin.webp",
     max: 8,
   },
+  "Pako Battiliar": {
+    type: "weapon",
+    set: "Base Game",
+    img: "/icons/pakoBattiliar.webp",
+    max: 8,
+  },
+  "Glass Fandango": {
+    type: "weapon",
+    set: "Base Game",
+    img: "/icons/glassFandango.webp",
+    max: 8,
+  },
+  Phas3r: {
+    type: "weapon",
+    set: "Base Game",
+    img: "/icons/phas3r.webp",
+    max: 8,
+  },
+  "Party Popper": {
+    type: "weapon",
+    set: "Base Game",
+    img: "/icons/partyPopper.webp",
+    max: 8,
+  },
+  Hats: {
+    type: "weapon",
+    set: "Base Game",
+    img: "/icons/hats.webp",
+    max: 8,
+  },
 
   // ===== PASSIVES =====
   "Hollow Heart": {
@@ -453,5 +483,23 @@ export const baseGameItems = {
     set: "Base Game",
     img: "/icons/seraphicCry.webp",
     max: 1,
+  },
+  "Mazo Familiar": {
+    type: "evolvedWeapon",
+    set: "Base Game",
+    img: "/icons/mazoFamiliar.webp",
+    max: 8,
+  },
+  "Celestial Voulge": {
+    type: "evolvedWeapon",
+    set: "Base Game",
+    img: "/icons/celestialVoulge.webp",
+    max: 8,
+  },
+  Photonstorm: {
+    type: "evolvedWeapon",
+    set: "Base Game",
+    img: "/icons/photonstorm.webp",
+    max: 8,
   },
 };

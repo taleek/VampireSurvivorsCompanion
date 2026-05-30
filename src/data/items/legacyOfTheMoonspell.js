@@ -36,6 +36,12 @@ export const legacyOfTheMoonspellItems = {
     img: "/icons/nightSword.webp",
     max: 8,
   },
+  "Mille Bolle Blu": {
+    type: "weapon",
+    set: "Legacy of the Moonspell",
+    img: "/icons/milleBolleBlu.webp",
+    max: 8,
+  },
 
   // ===== EVOLVED WEAPONS =====
   "Festive Winds": {

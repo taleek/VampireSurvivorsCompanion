@@ -5,6 +5,7 @@ import { tidesOfTheFoscariItems } from "./tidesOfTheFoscari";
 import { operationGunsItems } from "./operationGuns";
 import { emeraldDioramaItems } from "./emeraldDiorama";
 import { odeToCastlevaniaItems } from "./odeToCastlevania";
+import { anteChamberItems } from "./anteChamber";
 
 export const items = {
   ...baseGameItems,
@@ -14,4 +15,5 @@ export const items = {
   ...operationGunsItems,
   ...emeraldDioramaItems,
   ...odeToCastlevaniaItems,
+  ...anteChamberItems,
 };

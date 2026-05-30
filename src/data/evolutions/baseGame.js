@@ -196,4 +196,28 @@ export const baseGameEvolutions = [
     ],
     consumes: ["Santa Javelin"],
   },
+  {
+    result: "Mazo Familiar",
+    requirements: [
+      { item: "Pako Battiliar", level: 8 },
+      { item: "Hollow Heart", level: 5 },
+    ],
+    consumes: ["Pako Battiliar"],
+  },
+  {
+    result: "Celestial Voulge",
+    requirements: [
+      { item: "Glass Fandango", level: 8 },
+      { item: "Wings", level: 5 },
+    ],
+    consumes: ["Glass Fandango"],
+  },
+  {
+    result: "Photonstorm",
+    requirements: [
+      { item: "Phas3r", level: 8 },
+      { item: "Empty Tome", level: 5 },
+    ],
+    consumes: ["Phas3r"],
+  },
 ];

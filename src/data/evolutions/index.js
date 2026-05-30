@@ -5,6 +5,7 @@ import { tidesOfTheFoscariEvolutions } from "./tidesOfTheFoscari";
 import { operationGunsEvolutions } from "./operationGuns";
 import { emeraldDioramaEvolutions } from "./emeraldDiorama";
 import { odeToCastlevaniaEvolutions } from "./odeToCastlevania";
+import { anteChamberEvolutions } from "./anteChamber";
 
 export const evolutions = [
   ...baseGameEvolutions,
@@ -14,4 +15,5 @@ export const evolutions = [
   ...operationGunsEvolutions,
   ...emeraldDioramaEvolutions,
   ...odeToCastlevaniaEvolutions,
+  ...anteChamberEvolutions,
 ];

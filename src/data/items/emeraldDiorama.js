@@ -78,6 +78,12 @@ export const emeraldDioramaItems = {
     img: "/icons/sanguineStar.png",
     max: 8,
   },
+  "Emerald Rapture": {
+  type: "weapon",
+  set: "Emerald Diorama",
+  img: "/icons/emeraldRapture.png",
+  max: 8,
+},
 
   // ===== PASSIVES =====
   "Parm Aegis": {
@@ -227,4 +233,11 @@ export const emeraldDioramaItems = {
     max: 8,
     levelable: true,
   },
+  "Emerald Wave": {
+  type: "evolvedWeapon",
+  set: "Emerald Diorama",
+  img: "/icons/emeraldWave.png",
+  max: 8,
+  levelable: true,
+},
 };
