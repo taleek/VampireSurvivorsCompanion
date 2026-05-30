@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { items } from "./data/items";
 import { evolutions } from "./data/evolutions";
 
@@ -64,6 +64,16 @@ export default function App() {
   const [showEvolvedWeapons, setShowEvolvedWeapons] = useState(false);
   const [plannedEvos, setPlannedEvos] = useState([]);
   const [showPossibleEvos, setShowPossibleEvos] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  // Top-level panel collapse state
+  const [panelOpen, setPanelOpen] = useState({
+    weapons: true,
+    passives: true,
+    inventory: true,
+    evolutions: true,
+  });
+
   const [openSections, setOpenSections] = useState({
     baseWeapons: {
       "Base Game": true,
@@ -94,6 +104,12 @@ export default function App() {
     },
   });
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 900);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const panelStyle = {
     background: colors.panel,
     border: `2px solid ${colors.border}`,
@@ -119,7 +135,26 @@ export default function App() {
     fontWeight: "bold",
   };
 
+  const panelHeaderStyle = {
+    width: "100%",
+    background: "transparent",
+    border: "none",
+    padding: "0",
+    margin: "0 0 8px 0",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    color: colors.gold,
+    fontFamily: "Cinzel, serif",
+    letterSpacing: "1px",
+    textAlign: "left",
+  };
+
   const togglePlannedEvo = (resultName) => {
+    // Don't allow planning an evolution for a consumed item
+    if (evolvedWeapons.includes(resultName)) return;
+
     setPlannedEvos((prev) =>
       prev.includes(resultName)
         ? prev.filter((item) => item !== resultName)
@@ -137,6 +172,10 @@ export default function App() {
     }));
   };
 
+  const togglePanel = (key) => {
+    setPanelOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
   const getItemsBySetAndType = (setName, type) =>
     Object.entries(items)
       .filter(([, data]) => data.set === setName && data.type === type)
@@ -145,6 +184,14 @@ export default function App() {
   const getImagePath = (item) => items[item]?.img || null;
 
   const getMaxLevel = (item) => items[item]?.max || 8;
+
+  // Evolved weapons only show level controls if explicitly marked levelable
+  const isLevelable = (item) => {
+    const data = items[item];
+    if (!data) return true;
+    if (data.type === "evolvedWeapon") return data.levelable === true;
+    return true;
+  };
 
   const fullEvolutionCount = owned.filter(
     (item) => items[item]?.type === "evolvedWeapon",
@@ -157,23 +204,19 @@ export default function App() {
   ).length;
 
   const toggleOwned = (name) => {
+    // Don't allow re-adding a consumed (evolved-away) item
+    if (evolvedWeapons.includes(name)) return;
+
     setOwned((prev) => {
       const alreadyOwned = prev.includes(name);
-
       if (alreadyOwned) {
-        setLevels((currentLevels) => ({
-          ...currentLevels,
-          [name]: 0,
-        }));
-
+        setLevels((currentLevels) => ({ ...currentLevels, [name]: 0 }));
         return prev.filter((item) => item !== name);
       }
-
       setLevels((currentLevels) => ({
         ...currentLevels,
         [name]: currentLevels[name] || 1,
       }));
-
       return [...prev, name];
     });
   };
@@ -187,11 +230,13 @@ export default function App() {
   };
 
   const increaseLevel = (name, max) => {
+    // Don't allow re-adding a consumed (evolved-away) item
+    if (evolvedWeapons.includes(name)) return;
+
     setLevels((prev) => ({
       ...prev,
       [name]: Math.min((prev[name] || 0) + 1, max),
     }));
-
     setOwned((prev) => {
       if (prev.includes(name)) return prev;
       return [...prev, name];
@@ -201,57 +246,37 @@ export default function App() {
   const decreaseLevel = (name) => {
     setLevels((prev) => {
       const newLevel = Math.max((prev[name] || 0) - 1, 0);
-
       if (newLevel === 0) {
         setOwned((ownedPrev) => ownedPrev.filter((item) => item !== name));
       }
-
-      return {
-        ...prev,
-        [name]: newLevel,
-      };
+      return { ...prev, [name]: newLevel };
     });
   };
 
   const evolveWeapon = (evo) => {
     setOwned((prev) => {
       let updated = [...prev];
-
       evo.consumes.forEach((item) => {
         updated = updated.filter((ownedItem) => ownedItem !== item);
       });
-
-      if (!updated.includes(evo.result)) {
-        updated.push(evo.result);
-      }
-
+      if (!updated.includes(evo.result)) updated.push(evo.result);
       return updated;
     });
-
     setLevels((prev) => {
-      const updated = {
-        ...prev,
-        [evo.result]: 1,
-      };
-
+      const updated = { ...prev, [evo.result]: 1 };
       evo.consumes.forEach((item) => {
         updated[item] = 0;
       });
-
       return updated;
     });
-
     setEvolvedWeapons((prev) => [...new Set([...prev, ...evo.consumes])]);
   };
 
   const visibleEvos = evolutions.filter((evo) => {
     if (owned.includes(evo.result)) return false;
-
     if (plannedEvos.includes(evo.result)) return true;
-
     return evo.requirements.some((req) => {
       const itemType = items[req.item]?.type;
-
       return owned.includes(req.item) && itemType !== "passive";
     });
   });
@@ -260,7 +285,6 @@ export default function App() {
     if (owned.includes(evo.result)) return false;
     if (plannedEvos.includes(evo.result)) return false;
     if (visibleEvos.includes(evo)) return false;
-
     return evo.requirements.some((req) => owned.includes(req.item));
   });
 
@@ -268,23 +292,18 @@ export default function App() {
     const normalRequirementsMet = evo.requirements.every(
       (req) => (levels[req.item] || 0) >= req.level,
     );
-
     const fullEvolutionsMet =
       !evo.specialRequirements?.fullEvolutions ||
       fullEvolutionCount >= evo.specialRequirements.fullEvolutions;
-
     const maxedPassivesMet =
       !evo.specialRequirements?.maxedPassives ||
       maxedPassiveCount >= evo.specialRequirements.maxedPassives;
-
     return normalRequirementsMet && fullEvolutionsMet && maxedPassivesMet;
   };
 
   const specialRequirementDisplay = (evo) => {
     const special = evo.specialRequirements;
-
     if (!special) return null;
-
     return (
       <div
         style={{
@@ -300,7 +319,6 @@ export default function App() {
             {special.fullEvolutions}
           </div>
         )}
-
         {special.maxedPassives && (
           <div>
             <strong>Maxed Passives:</strong> {maxedPassiveCount}/
@@ -319,7 +337,6 @@ export default function App() {
 
     let background = colors.buttonAlt;
     let borderColor = colors.border;
-
     if (isEvolved) {
       background = colors.evolved;
       borderColor = colors.gold;
@@ -337,7 +354,10 @@ export default function App() {
           (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
         }
         onMouseLeave={(e) =>
-          (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
+          (e.currentTarget.style.boxShadow =
+            isOwned || isEvolved || isPlannedEvo
+              ? `0 0 8px ${borderColor}`
+              : "none")
         }
         key={item}
         onClick={() => {
@@ -349,7 +369,6 @@ export default function App() {
         }}
         style={{
           transition: "all 0.2s ease",
-          boxShadow: "0 0 8px rgba(255, 0, 0, 0.2)",
           margin: "5px",
           padding: "10px",
           background,
@@ -381,7 +400,6 @@ export default function App() {
             }}
           />
         )}
-
         <span
           style={{
             fontFamily: "'Cinzel', serif",
@@ -400,15 +418,47 @@ export default function App() {
 
   const levelControl = (name, max, requiredLevel = null) => {
     const currentLevel = levels[name] || 0;
-
     const imagePath = getImagePath(name);
-
     const requirementText =
       requiredLevel === max
         ? " (max)"
         : requiredLevel
           ? ` (needs ${requiredLevel})`
           : "";
+
+    // Don't show level controls for single-level evolved weapons
+    if (!isLevelable(name)) {
+      return (
+        <div
+          style={{
+            marginBottom: "8px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          {imagePath && (
+            <img
+              src={imagePath}
+              alt={name}
+              style={{ width: "32px", height: "32px", objectFit: "contain" }}
+            />
+          )}
+          <div>
+            <strong>{name}</strong>
+            <span
+              style={{
+                color: colors.subtext,
+                marginLeft: "6px",
+                fontSize: "13px",
+              }}
+            >
+              (evolved)
+            </span>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div
@@ -423,14 +473,9 @@ export default function App() {
           <img
             src={imagePath}
             alt={name}
-            style={{
-              width: "32px",
-              height: "32px",
-              objectFit: "contain",
-            }}
+            style={{ width: "32px", height: "32px", objectFit: "contain" }}
           />
         )}
-
         <div>
           <strong>{name}</strong>: {currentLevel}/{max}
           <span style={{ color: colors.subtext }}>{requirementText}</span>
@@ -496,7 +541,6 @@ export default function App() {
         {setName} {openSections[sectionType][setName] ? "▲" : "▼"} (
         {sectionItems.length})
       </button>
-
       {openSections[sectionType][setName] && (
         <div style={{ display: "flex", flexWrap: "wrap", marginTop: "8px" }}>
           {sectionItems.length > 0 ? (
@@ -509,27 +553,42 @@ export default function App() {
     </div>
   );
 
+  // Collapsible panel header
+  const PanelHeader = ({ panelKey, title, level = 2 }) => {
+    const Tag = `h${level}`;
+    return (
+      <button
+        onClick={() => togglePanel(panelKey)}
+        style={panelHeaderStyle}
+        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+      >
+        <Tag
+          style={{
+            margin: 0,
+            color: colors.gold,
+            fontFamily: "Cinzel, serif",
+            letterSpacing: "1px",
+            fontSize: level === 2 ? "1.5rem" : "1.17rem",
+          }}
+        >
+          {title}
+        </Tag>
+        <span style={{ fontSize: "1rem", color: colors.gold }}>
+          {panelOpen[panelKey] ? "▲" : "▼"}
+        </span>
+      </button>
+    );
+  };
+
   return (
     <div
       style={{
         backgroundImage: `
-          radial-gradient(
-            circle at top,
-            #2a0000 0%,
-            #120000 35%,
-            #000000 100%
-          ),
-          repeating-linear-gradient(
-            45deg,
-            rgba(255,255,255,0.015) 0px,
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px,
-            transparent 6px
-          )
+          radial-gradient(circle at top, #2a0000 0%, #120000 35%, #000000 100%),
+          repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 6px)
         `,
-
         backgroundBlendMode: "overlay",
-
         color: colors.text,
         minHeight: "100vh",
         padding: "20px",
@@ -560,11 +619,8 @@ export default function App() {
               width: "100%",
               height: "auto",
               display: "block",
-
-              filter: `
-        drop-shadow(0 0 12px rgba(40, 0, 0, 0.8))
-        drop-shadow(0 0 30px rgba(0, 0, 0, 0.9))
-      `,
+              filter:
+                "drop-shadow(0 0 12px rgba(40, 0, 0, 0.8)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.9))",
             }}
           />
         </div>
@@ -589,7 +645,6 @@ export default function App() {
             borderRadius: "8px",
             cursor: "pointer",
             fontWeight: "bold",
-            boxShadow: `0 0 10px ${colors.borderSoft}`,
           }}
         >
           Reset Run
@@ -598,358 +653,338 @@ export default function App() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: window.innerWidth < 900 ? "1fr" : "2fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
             gap: "20px",
             alignItems: "start",
             width: "100%",
           }}
         >
+          {/* Weapons Panel */}
           <div style={panelStyle}>
-            <h2
-              style={{
-                color: colors.gold,
-                fontFamily: "Cinzel, serif",
-                letterSpacing: "1px",
-              }}
-            >
-              Weapons
-            </h2>
-
-            {sets.map((setName) =>
-              setSection(
-                "baseWeapons",
-                setName,
-                getItemsBySetAndType(setName, "weapon"),
-              ),
-            )}
-
-            <button
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
-              }
-              onClick={() => setShowEvolvedWeapons(!showEvolvedWeapons)}
-              style={toggleButtonStyle}
-            >
-              {showEvolvedWeapons
-                ? "Hide Evolved Weapons ▲"
-                : "Show Evolved Weapons ▼"}
-            </button>
-
-            {showEvolvedWeapons && (
+            <PanelHeader panelKey="weapons" title="Weapons" />
+            {panelOpen.weapons && (
               <>
-                <h3>Evolved Weapons</h3>
-
                 {sets.map((setName) =>
                   setSection(
-                    "evolvedWeapons",
+                    "baseWeapons",
                     setName,
-                    getItemsBySetAndType(setName, "evolvedWeapon"),
+                    getItemsBySetAndType(setName, "weapon"),
                   ),
+                )}
+                <button
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 0 15px rgba(255,0,0,0.7)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 0 8px rgba(255,0,0,0.2)")
+                  }
+                  onClick={() => setShowEvolvedWeapons(!showEvolvedWeapons)}
+                  style={toggleButtonStyle}
+                >
+                  {showEvolvedWeapons
+                    ? "Hide Evolved Weapons ▲"
+                    : "Show Evolved Weapons ▼"}
+                </button>
+                {showEvolvedWeapons && (
+                  <>
+                    <h3
+                      style={{
+                        color: colors.gold,
+                        fontFamily: "Cinzel, serif",
+                      }}
+                    >
+                      Evolved Weapons
+                    </h3>
+                    {sets.map((setName) =>
+                      setSection(
+                        "evolvedWeapons",
+                        setName,
+                        getItemsBySetAndType(setName, "evolvedWeapon"),
+                      ),
+                    )}
+                  </>
                 )}
               </>
             )}
           </div>
 
+          {/* Passives Panel */}
           <div style={panelStyle}>
-            <h2
-              style={{
-                color: colors.gold,
-                fontFamily: "Cinzel, serif",
-                letterSpacing: "1px",
-              }}
-            >
-              Passive Items
-            </h2>
-
-            {sets.map((setName) =>
-              setSection(
-                "passives",
-                setName,
-                getItemsBySetAndType(setName, "passive"),
-              ),
-            )}
+            <PanelHeader panelKey="passives" title="Passive Items" />
+            {panelOpen.passives &&
+              sets.map((setName) =>
+                setSection(
+                  "passives",
+                  setName,
+                  getItemsBySetAndType(setName, "passive"),
+                ),
+              )}
           </div>
         </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: window.innerWidth < 900 ? "1fr" : "2fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
             gap: "20px",
             marginTop: "20px",
             alignItems: "start",
             width: "100%",
           }}
         >
+          {/* Inventory Panel */}
           <div style={panelStyle}>
-            <h2
-              style={{
-                color: colors.gold,
-                fontFamily: "Cinzel, serif",
-                letterSpacing: "1px",
-              }}
-            >
-              Inventory
-            </h2>
-
-            {owned.length === 0 && (
-              <p
-                style={{
-                  fontFamily: "'Cinzel', serif",
-                  color: colors.subtext,
-                }}
-              >
-                No items yet.
-              </p>
-            )}
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns:
-                  window.innerWidth < 900 ? "1fr" : "2fr 1fr",
-                gap: "20px",
-                alignItems: "start",
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    color: colors.gold,
-                    fontFamily: "Cinzel, serif",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  Weapons
-                </h3>
-
-                {owned
-                  .filter((item) => items[item]?.type !== "passive")
-                  .map((item) => (
-                    <div
-                      key={item}
-                      style={{
-                        marginBottom: "12px",
-                        paddingBottom: "8px",
-                        borderBottom: `1px solid ${colors.borderSoft}`,
-                      }}
-                    >
-                      {levelControl(item, getMaxLevel(item))}
-                    </div>
-                  ))}
-              </div>
-
-              <div>
-                <h3
-                  style={{
-                    color: colors.gold,
-                    fontFamily: "Cinzel, serif",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  Passives
-                </h3>
-
-                {owned
-                  .filter((item) => items[item]?.type === "passive")
-                  .map((item) => (
-                    <div
-                      key={item}
-                      style={{
-                        marginBottom: "12px",
-                        paddingBottom: "8px",
-                        borderBottom: `1px solid ${colors.borderSoft}`,
-                      }}
-                    >
-                      {levelControl(item, getMaxLevel(item))}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-
-          <div style={panelStyle}>
-            <h2
-              style={{
-                color: colors.gold,
-                fontFamily: "Cinzel, serif",
-                letterSpacing: "1px",
-              }}
-            >
-              Evolution Tracker
-            </h2>
-
-            {visibleEvos.length === 0 && (
-              <p
-                style={{
-                  fontFamily: "'Cinzel', serif",
-                  color: colors.subtext,
-                }}
-              >
-                Start by selecting an item
-              </p>
-            )}
-
-            {visibleEvos.map((evo) => {
-              const ready = isEvolutionReady(evo);
-
-              return (
+            <PanelHeader panelKey="inventory" title="Inventory" />
+            {panelOpen.inventory && (
+              <>
+                {owned.length === 0 && (
+                  <p
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      color: colors.subtext,
+                    }}
+                  >
+                    No items yet.
+                  </p>
+                )}
                 <div
-                  key={evo.result}
                   style={{
-                    border: ready
-                      ? `2px solid ${colors.gold}`
-                      : `1px solid ${colors.border}`,
-                    borderRadius: "10px",
-                    padding: "15px",
-                    marginBottom: "15px",
-                    background: ready ? colors.ready : colors.notReady,
-                    ...(ready ? readyGlow : {}),
+                    display: "grid",
+                    gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
+                    gap: "20px",
+                    alignItems: "start",
                   }}
                 >
-                  <h3
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    {getImagePath(evo.result) && (
-                      <img
-                        src={getImagePath(evo.result)}
-                        alt={evo.result}
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          objectFit: "contain",
-                        }}
-                      />
-                    )}
-                    {evo.result}
-                  </h3>
-
-                  {evo.requirements.map((req) =>
-                    levelControl(req.item, getMaxLevel(req.item), req.level),
-                  )}
-
-                  {specialRequirementDisplay(evo)}
-
-                  <strong
-                    style={{
-                      color: ready ? colors.gold : colors.warning,
-                    }}
-                  >
-                    {ready ? "READY FOR EVOLUTION" : "NOT READY"}
-                  </strong>
-
-                  <br />
-
-                  {ready && (
-                    <button
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.boxShadow =
-                          "0 0 15px rgba(255,0,0,0.7)")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.boxShadow =
-                          "0 0 8px rgba(255,0,0,0.2)")
-                      }
-                      onClick={() => evolveWeapon(evo)}
-                      style={{
-                        transition: "all 0.2s ease",
-                        boxShadow: "0 0 8px rgba(255,0,0,0.2)",
-                        marginTop: "10px",
-                        padding: "10px",
-                        background: colors.evolved,
-                        color: colors.text,
-                        border: `1px solid ${colors.gold}`,
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Evolve
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-
-            <button
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 15px rgba(255,0,0,0.7)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 8px rgba(255,0,0,0.2)")
-              }
-              onClick={() => setShowPossibleEvos(!showPossibleEvos)}
-              style={toggleButtonStyle}
-            >
-              {showPossibleEvos
-                ? "Possible Evo Paths ▲"
-                : `Possible Evo Paths ▼ (${possibleEvos.length})`}
-            </button>
-
-            {showPossibleEvos &&
-              possibleEvos.map((evo) => {
-                const ready = isEvolutionReady(evo);
-
-                return (
-                  <div
-                    key={evo.result}
-                    style={{
-                      border: `2px solid ${colors.gold}`,
-                      boxShadow: `0 0 12px ${colors.gold}`,
-                      borderRadius: "10px",
-                      padding: "15px",
-                      marginBottom: "15px",
-                      background: colors.possible,
-                      opacity: 0.95,
-                    }}
-                  >
+                  <div>
                     <h3
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
+                        color: colors.gold,
+                        fontFamily: "Cinzel, serif",
+                        letterSpacing: "1px",
                       }}
                     >
-                      {getImagePath(evo.result) && (
-                        <img
-                          src={getImagePath(evo.result)}
-                          alt={evo.result}
-                          style={{
-                            width: "36px",
-                            height: "36px",
-                            objectFit: "contain",
-                          }}
-                        />
-                      )}
-
-                      {evo.result}
+                      Weapons
                     </h3>
-
-                    {evo.requirements.map((req) =>
-                      levelControl(req.item, getMaxLevel(req.item), req.level),
-                    )}
-
-                    {specialRequirementDisplay(evo)}
-
-                    <strong
+                    {owned
+                      .filter((item) => items[item]?.type !== "passive")
+                      .map((item) => (
+                        <div
+                          key={item}
+                          style={{
+                            marginBottom: "12px",
+                            paddingBottom: "8px",
+                            borderBottom: `1px solid ${colors.borderSoft}`,
+                          }}
+                        >
+                          {levelControl(item, getMaxLevel(item))}
+                        </div>
+                      ))}
+                  </div>
+                  <div>
+                    <h3
                       style={{
-                        color: ready ? colors.gold : colors.warning,
+                        color: colors.gold,
+                        fontFamily: "Cinzel, serif",
+                        letterSpacing: "1px",
                       }}
                     >
-                      {ready ? "READY FOR EVOLUTION" : "POSSIBLE PATH"}
-                    </strong>
+                      Passives
+                    </h3>
+                    {owned
+                      .filter((item) => items[item]?.type === "passive")
+                      .map((item) => (
+                        <div
+                          key={item}
+                          style={{
+                            marginBottom: "12px",
+                            paddingBottom: "8px",
+                            borderBottom: `1px solid ${colors.borderSoft}`,
+                          }}
+                        >
+                          {levelControl(item, getMaxLevel(item))}
+                        </div>
+                      ))}
                   </div>
-                );
-              })}
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Evolution Tracker Panel */}
+          <div style={panelStyle}>
+            <PanelHeader panelKey="evolutions" title="Evolution Tracker" />
+            {panelOpen.evolutions && (
+              <>
+                {visibleEvos.length === 0 && (
+                  <p
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      color: colors.subtext,
+                    }}
+                  >
+                    Start by selecting an item
+                  </p>
+                )}
+
+                {visibleEvos.map((evo) => {
+                  const ready = isEvolutionReady(evo);
+                  return (
+                    <div
+                      key={evo.result}
+                      style={{
+                        border: ready
+                          ? `2px solid ${colors.gold}`
+                          : `1px solid ${colors.border}`,
+                        borderRadius: "10px",
+                        padding: "15px",
+                        marginBottom: "15px",
+                        background: ready ? colors.ready : colors.notReady,
+                        ...(ready ? readyGlow : {}),
+                      }}
+                    >
+                      <h3
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {getImagePath(evo.result) && (
+                          <img
+                            src={getImagePath(evo.result)}
+                            alt={evo.result}
+                            style={{
+                              width: "36px",
+                              height: "36px",
+                              objectFit: "contain",
+                            }}
+                          />
+                        )}
+                        {evo.result}
+                      </h3>
+                      {evo.requirements.map((req) =>
+                        levelControl(
+                          req.item,
+                          getMaxLevel(req.item),
+                          req.level,
+                        ),
+                      )}
+                      {specialRequirementDisplay(evo)}
+                      <strong
+                        style={{ color: ready ? colors.gold : colors.warning }}
+                      >
+                        {ready ? "READY FOR EVOLUTION" : "NOT READY"}
+                      </strong>
+                      <br />
+                      {ready && (
+                        <button
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.boxShadow =
+                              "0 0 15px rgba(255,0,0,0.7)")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.boxShadow =
+                              "0 0 8px rgba(255,0,0,0.2)")
+                          }
+                          onClick={() => evolveWeapon(evo)}
+                          style={{
+                            transition: "all 0.2s ease",
+                            boxShadow: "0 0 8px rgba(255,0,0,0.2)",
+                            marginTop: "10px",
+                            padding: "10px",
+                            background: colors.evolved,
+                            color: colors.text,
+                            border: `1px solid ${colors.gold}`,
+                            borderRadius: "6px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Evolve
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+
+                <button
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 0 15px rgba(255,0,0,0.7)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.boxShadow =
+                      "0 0 8px rgba(255,0,0,0.2)")
+                  }
+                  onClick={() => setShowPossibleEvos(!showPossibleEvos)}
+                  style={toggleButtonStyle}
+                >
+                  {showPossibleEvos
+                    ? "Possible Evo Paths ▲"
+                    : `Possible Evo Paths ▼ (${possibleEvos.length})`}
+                </button>
+
+                {showPossibleEvos &&
+                  possibleEvos.map((evo) => {
+                    const ready = isEvolutionReady(evo);
+                    return (
+                      <div
+                        key={evo.result}
+                        style={{
+                          border: `2px solid ${colors.gold}`,
+                          boxShadow: `0 0 12px ${colors.gold}`,
+                          borderRadius: "10px",
+                          padding: "15px",
+                          marginBottom: "15px",
+                          background: colors.possible,
+                          opacity: 0.95,
+                        }}
+                      >
+                        <h3
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          {getImagePath(evo.result) && (
+                            <img
+                              src={getImagePath(evo.result)}
+                              alt={evo.result}
+                              style={{
+                                width: "36px",
+                                height: "36px",
+                                objectFit: "contain",
+                              }}
+                            />
+                          )}
+                          {evo.result}
+                        </h3>
+                        {evo.requirements.map((req) =>
+                          levelControl(
+                            req.item,
+                            getMaxLevel(req.item),
+                            req.level,
+                          ),
+                        )}
+                        {specialRequirementDisplay(evo)}
+                        <strong
+                          style={{
+                            color: ready ? colors.gold : colors.warning,
+                          }}
+                        >
+                          {ready ? "READY FOR EVOLUTION" : "POSSIBLE PATH"}
+                        </strong>
+                      </div>
+                    );
+                  })}
+              </>
+            )}
           </div>
         </div>
+
         <div
           style={{
             marginTop: "40px",

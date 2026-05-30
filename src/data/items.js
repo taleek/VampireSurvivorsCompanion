@@ -1,7 +1,7 @@
 export const items = {
   // ===== BASE GAME WEAPONS =====
 
-  "Whip": {
+  Whip: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/whip.webp",
@@ -15,21 +15,21 @@ export const items = {
     max: 8,
   },
 
-  "Knife": {
+  Knife: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/knife.webp",
     max: 8,
   },
 
-  "Axe": {
+  Axe: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/axe.webp",
     max: 8,
   },
 
-  "Cross": {
+  Cross: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/cross.webp",
@@ -50,7 +50,7 @@ export const items = {
     max: 8,
   },
 
-  "Garlic": {
+  Garlic: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/garlic.webp",
@@ -64,7 +64,7 @@ export const items = {
     max: 8,
   },
 
-  "Runetracer": {
+  Runetracer: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/runetracer.webp",
@@ -78,14 +78,14 @@ export const items = {
     max: 8,
   },
 
-  "Pentagram": {
+  Pentagram: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/pentagram.webp",
     max: 8,
   },
 
-  "Peachone": {
+  Peachone: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/peachone.webp",
@@ -141,7 +141,7 @@ export const items = {
     max: 7,
   },
 
-  "Laurel": {
+  Laurel: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/laurel.webp",
@@ -155,7 +155,7 @@ export const items = {
     max: 8,
   },
 
-  "Bracelet": {
+  Bracelet: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/bracelet.webp",
@@ -176,7 +176,7 @@ export const items = {
     max: 8,
   },
 
-  "Bone": {
+  Bone: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/bone.webp",
@@ -190,7 +190,7 @@ export const items = {
     max: 8,
   },
 
-  "Carréllo": {
+  Carréllo: {
     type: "weapon",
     set: "Base Game",
     img: "/icons/carrello.webp",
@@ -234,77 +234,77 @@ export const items = {
     max: 5,
   },
 
-  "Bracer": {
+  Bracer: {
     type: "passive",
     set: "Base Game",
     img: "/icons/bracer.webp",
     max: 5,
   },
 
-  "Candelabrador": {
+  Candelabrador: {
     type: "passive",
     set: "Base Game",
     img: "/icons/candelabrador.webp",
     max: 5,
   },
 
-  "Clover": {
+  Clover: {
     type: "passive",
     set: "Base Game",
     img: "/icons/clover.webp",
     max: 5,
   },
 
-  "Spellbinder": {
+  Spellbinder: {
     type: "passive",
     set: "Base Game",
     img: "/icons/spellbinder.webp",
     max: 5,
   },
 
-  "Spinach": {
+  Spinach: {
     type: "passive",
     set: "Base Game",
     img: "/icons/spinach.webp",
     max: 5,
   },
 
-  "Pummarola": {
+  Pummarola: {
     type: "passive",
     set: "Base Game",
     img: "/icons/pummarola.webp",
     max: 5,
   },
 
-  "Attractorb": {
+  Attractorb: {
     type: "passive",
     set: "Base Game",
     img: "/icons/attractorb.webp",
     max: 5,
   },
 
-  "Armor": {
+  Armor: {
     type: "passive",
     set: "Base Game",
     img: "/icons/armor.webp",
     max: 5,
   },
 
-  "Duplicator": {
+  Duplicator: {
     type: "passive",
     set: "Base Game",
     img: "/icons/duplicator.webp",
     max: 2,
   },
 
-  "Crown": {
+  Crown: {
     type: "passive",
     set: "Base Game",
     img: "/icons/crown.webp",
     max: 5,
   },
 
-  "Tiragisú": {
+  Tiragisú: {
     type: "passive",
     set: "Base Game",
     img: "/icons/tiragisu.webp",
@@ -325,7 +325,7 @@ export const items = {
     max: 5,
   },
 
-  "Wings": {
+  Wings: {
     type: "passive",
     set: "Base Game",
     img: "/icons/wings.webp",
@@ -411,7 +411,7 @@ export const items = {
     max: 8,
   },
 
-  "Hellfire": {
+  Hellfire: {
     type: "evolvedWeapon",
     set: "Base Game",
     img: "/icons/hellfire.webp",
@@ -453,14 +453,14 @@ export const items = {
     max: 8,
   },
 
-  "Vandalier": {
+  Vandalier: {
     type: "evolvedWeapon",
     set: "Base Game",
     img: "/icons/vandalier.webp",
     max: 8,
   },
 
-  "Phieraggi": {
+  Phieraggi: {
     type: "evolvedWeapon",
     set: "Base Game",
     img: "/icons/phieraggi.webp",
@@ -474,7 +474,7 @@ export const items = {
     max: 8,
   },
 
-  "Mannajja": {
+  Mannajja: {
     type: "evolvedWeapon",
     set: "Base Game",
     img: "/icons/mannajja.webp",
@@ -502,7 +502,7 @@ export const items = {
     max: 8,
   },
 
-  "Fuwalafuwaloo": {
+  Fuwalafuwaloo: {
     type: "evolvedWeapon",
     set: "Base Game",
     img: "/icons/fuwalafuwaloo.webp",
@@ -514,6 +514,7 @@ export const items = {
     set: "Base Game",
     img: "/icons/biBracelet.webp",
     max: 6,
+    levelable: true,
   },
 
   "Tri-Bracelet": {
@@ -521,6 +522,7 @@ export const items = {
     set: "Base Game",
     img: "/icons/triBracelet.webp",
     max: 6,
+    levelable: true,
   },
 
   "Sole Solution": {
@@ -537,7 +539,7 @@ export const items = {
     max: 8,
   },
 
-    // ===== LEGACY OF THE MOONSPELL WEAPONS =====
+  // ===== LEGACY OF THE MOONSPELL WEAPONS =====
 
   "Silver Wind": {
     type: "weapon",
@@ -618,7 +620,7 @@ export const items = {
     max: 8,
   },
 
-  "Muramasa": {
+  Muramasa: {
     type: "evolvedWeapon",
     set: "Legacy of the Moonspell",
     img: "/icons/muramasa.webp",
@@ -750,7 +752,7 @@ export const items = {
     max: 1,
   },
 
-  "Impostongue": {
+  Impostongue: {
     type: "evolvedWeapon",
     set: "Emergency Meeting",
     img: "/icons/impostongue.webp",
@@ -780,28 +782,28 @@ export const items = {
 
   // ===== TIDES OF THE FOSCARI WEAPONS =====
 
-  "SpellString": {
+  SpellString: {
     type: "weapon",
     set: "Tides of the Foscari",
     img: "/icons/spellString.webp",
     max: 6,
   },
 
-  "SpellStream": {
+  SpellStream: {
     type: "weapon",
     set: "Tides of the Foscari",
     img: "/icons/spellStream.webp",
     max: 6,
   },
 
-  "SpellStrike": {
+  SpellStrike: {
     type: "weapon",
     set: "Tides of the Foscari",
     img: "/icons/spellStrike.webp",
     max: 6,
   },
 
-  "Eskizzibur": {
+  Eskizzibur: {
     type: "weapon",
     set: "Tides of the Foscari",
     img: "/icons/eskizzibur.webp",
@@ -831,21 +833,21 @@ export const items = {
 
   // ===== TIDES OF THE FOSCARI PASSIVES =====
 
-  "Armor": {
+  Armor: {
     type: "passive",
     set: "Base Game",
     img: "/icons/armor.webp",
     max: 5,
   },
 
-  "Bracer": {
+  Bracer: {
     type: "passive",
     set: "Base Game",
     img: "/icons/bracer.webp",
     max: 5,
   },
 
-  "Clover": {
+  Clover: {
     type: "passive",
     set: "Base Game",
     img: "/icons/clover.webp",
@@ -861,42 +863,42 @@ export const items = {
 
   // ===== TIDES OF THE FOSCARI EVOLVED WEAPONS =====
 
-  "SpellStrom": {
+  SpellStrom: {
     type: "evolvedWeapon",
     set: "Tides of the Foscari",
     img: "/icons/spellStrom.webp",
     max: 6,
   },
 
-  "Legionnaire": {
+  Legionnaire: {
     type: "evolvedWeapon",
     set: "Tides of the Foscari",
     img: "/icons/legionnaire.webp",
     max: 8,
   },
 
-  "Millionaire": {
+  Millionaire: {
     type: "evolvedWeapon",
     set: "Tides of the Foscari",
     img: "/icons/millionaire.webp",
     max: 8,
   },
 
-  "Luminaire": {
+  Luminaire: {
     type: "evolvedWeapon",
     set: "Tides of the Foscari",
     img: "/icons/luminaire.webp",
     max: 8,
   },
 
-  "Ophion": {
+  Ophion: {
     type: "evolvedWeapon",
     set: "Tides of the Foscari",
     img: "/icons/ophion.webp",
     max: 8,
   },
-  
-    // ===== OPERATION GUNS WEAPONS =====
+
+  // ===== OPERATION GUNS WEAPONS =====
 
   "Long Gun": {
     type: "weapon",
@@ -926,7 +928,7 @@ export const items = {
     max: 8,
   },
 
-  "Firearm": {
+  Firearm: {
     type: "weapon",
     set: "Operation Guns",
     img: "/icons/firearm.webp",
@@ -1063,9 +1065,9 @@ export const items = {
     max: 8,
   },
 
-    // ===== EMERALD DIORAMA WEAPONS =====
+  // ===== EMERALD DIORAMA WEAPONS =====
 
-  "Fleuret": {
+  Fleuret: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/fleuret.png",
@@ -1079,28 +1081,28 @@ export const items = {
     max: 6,
   },
 
-  "Splashers": {
+  Splashers: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/splashers.png",
     max: 8,
   },
 
-  "Flamberge": {
+  Flamberge: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/flamberge.png",
     max: 6,
   },
 
-  "Punch": {
+  Punch: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/punch.png",
     max: 6,
   },
 
-  "Kick": {
+  Kick: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/kick.png",
@@ -1128,7 +1130,7 @@ export const items = {
     max: 8,
   },
 
-  "Khukuri": {
+  Khukuri: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/khukuri.png",
@@ -1142,7 +1144,7 @@ export const items = {
     max: 8,
   },
 
-  "Bullova": {
+  Bullova: {
     type: "weapon",
     set: "Emerald Diorama",
     img: "/icons/bullova.png",
@@ -1179,6 +1181,7 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/dressSword.png",
     max: 6,
+    levelable: true,
   },
 
   "Espada Ropera": {
@@ -1186,20 +1189,23 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/espadaRopera.png",
     max: 6,
+    levelable: true,
   },
 
-  "Lordstar": {
+  Lordstar: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/lordstar.png",
     max: 6,
+    levelable: true,
   },
 
-  "Dayblade": {
+  Dayblade: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/dayblade.png",
     max: 6,
+    levelable: true,
   },
 
   "Pursuant Blades": {
@@ -1207,20 +1213,23 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/pursuantBlades.png",
     max: 8,
+    levelable: true,
   },
 
-  "Zweihander": {
+  Zweihander: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/zweihander.png",
     max: 6,
+    levelable: true,
   },
 
-  "Galatyn": {
+  Galatyn: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/galatyn.png",
     max: 6,
+    levelable: true,
   },
 
   "Pressure Point": {
@@ -1228,6 +1237,7 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/pressurePoint.png",
     max: 6,
+    levelable: true,
   },
 
   "Gilded Hand": {
@@ -1235,6 +1245,7 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/gildedHand.png",
     max: 6,
+    levelable: true,
   },
 
   "Triangle Kick": {
@@ -1242,6 +1253,7 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/triangleKick.png",
     max: 8,
+    levelable: true,
   },
 
   "Hecaton Machine Gun": {
@@ -1249,13 +1261,15 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/hecatonMachineGun.png",
     max: 6,
+    levelable: true,
   },
 
-  "Divergence": {
+  Divergence: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/divergence.png",
     max: 6,
+    levelable: true,
   },
 
   "Hydra Cannon": {
@@ -1263,6 +1277,7 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/hydraCannon.png",
     max: 6,
+    levelable: true,
   },
 
   "Hyperion Bazooka": {
@@ -1270,34 +1285,39 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/hyperionBazooka.png",
     max: 6,
+    levelable: true,
   },
 
-  "Pendragon": {
+  Pendragon: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/pendragon.png",
     max: 8,
+    levelable: true,
   },
 
-  "Jetstream": {
+  Jetstream: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/jetstream.png",
     max: 8,
+    levelable: true,
   },
 
-  "Gekkabijin": {
+  Gekkabijin: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/gekkabijin.png",
     max: 8,
+    levelable: true,
   },
 
-  "Falconwind": {
+  Falconwind: {
     type: "evolvedWeapon",
     set: "Emerald Diorama",
     img: "/icons/falconwind.png",
     max: 8,
+    levelable: true,
   },
 
   "Blood Chalice": {
@@ -1305,9 +1325,10 @@ export const items = {
     set: "Emerald Diorama",
     img: "/icons/bloodChalice.png",
     max: 8,
+    levelable: true,
   },
 
-    // ===== ODE TO CASTLEVANIA WEAPONS =====
+  // ===== ODE TO CASTLEVANIA WEAPONS =====
 
   "Alchemy Whip": {
     type: "weapon",
@@ -1365,14 +1386,14 @@ export const items = {
     max: 8,
   },
 
-  "Shuriken": {
+  Shuriken: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/shuriken.webp",
     max: 8,
   },
 
-  "Javelin": {
+  Javelin: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/javelin.webp",
@@ -1393,7 +1414,7 @@ export const items = {
     max: 8,
   },
 
-  "Discus": {
+  Discus: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/discus.webp",
@@ -1407,7 +1428,7 @@ export const items = {
     max: 8,
   },
 
-    // ===== ODE TO CASTLEVANIA WEAPONS =====
+  // ===== ODE TO CASTLEVANIA WEAPONS =====
 
   "Alchemy Whip": {
     type: "weapon",
@@ -1465,14 +1486,14 @@ export const items = {
     max: 8,
   },
 
-  "Shuriken": {
+  Shuriken: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/shuriken.webp",
     max: 8,
   },
 
-  "Javelin": {
+  Javelin: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/javelin.webp",
@@ -1493,7 +1514,7 @@ export const items = {
     max: 8,
   },
 
-  "Discus": {
+  Discus: {
     type: "weapon",
     set: "Ode to Castlevania",
     img: "/icons/discus.webp",
@@ -1586,14 +1607,14 @@ export const items = {
     max: 8,
   },
 
-  "Salamender": {
+  Salamender: {
     type: "evolvedWeapon",
     set: "Ode to Castlevania",
     img: "/icons/salamender.webp",
     max: 8,
   },
 
-  "Blackmore": {
+  Blackmore: {
     type: "evolvedWeapon",
     set: "Ode to Castlevania",
     img: "/icons/blackmore.png",
@@ -1613,5 +1634,4 @@ export const items = {
     img: "/icons/alucardShield.webp",
     max: 8,
   },
-
 };
