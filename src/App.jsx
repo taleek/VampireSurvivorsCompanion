@@ -584,11 +584,6 @@ export default function App() {
   return (
     <div
       style={{
-        backgroundImage: `
-          radial-gradient(circle at top, #2a0000 0%, #120000 35%, #000000 100%),
-          repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 6px)
-        `,
-        backgroundBlendMode: "overlay",
         color: colors.text,
         minHeight: "100vh",
         padding: "20px",
@@ -653,9 +648,9 @@ export default function App() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: "20px",
-            alignItems: "start",
+            alignItems: "stretch",
             width: "100%",
           }}
         >
@@ -727,10 +722,10 @@ export default function App() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: "20px",
             marginTop: "20px",
-            alignItems: "start",
+            alignItems: "stretch",
             width: "100%",
           }}
         >
@@ -752,7 +747,7 @@ export default function App() {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
+                    gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
                     gap: "20px",
                     alignItems: "start",
                   }}
