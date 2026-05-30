@@ -123,4 +123,26 @@ export const emeraldDioramaEvolutions = [
     ],
     consumes: ["Emerald Rapture"],
   },
+  {
+  result: "Feather Spear",
+  requirements: [
+    { item: "Glaive", level: 6 },
+  ],
+  consumes: ["Glaive"],
+},
+{
+  result: "Lohengrin",
+  requirements: [
+    { item: "Feather Spear", level: 6 },
+  ],
+  consumes: ["Feather Spear"],
+},
+{
+  result: "Rings of Calamity",
+  requirements: [
+    { item: "Spirit Rings", level: 8 },
+  ],
+  specialRequirements: { maxedPassives: 5 },
+  consumes: ["Spirit Rings"],
+},
 ];

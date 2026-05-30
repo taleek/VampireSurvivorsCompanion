@@ -84,6 +84,18 @@ export const emeraldDioramaItems = {
   img: "/icons/emeraldRapture.png",
   max: 8,
 },
+Glaive: {
+  type: "weapon",
+  set: "Emerald Diorama",
+  img: "/icons/glaive.png",
+  max: 6,
+},
+"Spirit Rings": {
+  type: "weapon",
+  set: "Emerald Diorama",
+  img: "/icons/spiritRings.png",
+  max: 8,
+},
 
   // ===== PASSIVES =====
   "Parm Aegis": {
@@ -237,6 +249,27 @@ export const emeraldDioramaItems = {
   type: "evolvedWeapon",
   set: "Emerald Diorama",
   img: "/icons/emeraldWave.png",
+  max: 8,
+  levelable: true,
+},
+"Feather Spear": {
+  type: "evolvedWeapon",
+  set: "Emerald Diorama",
+  img: "/icons/featherSpear.png",
+  max: 6,
+  levelable: true,
+},
+Lohengrin: {
+  type: "evolvedWeapon",
+  set: "Emerald Diorama",
+  img: "/icons/lohengrin.png",
+  max: 6,
+  levelable: true,
+},
+"Rings of Calamity": {
+  type: "evolvedWeapon",
+  set: "Emerald Diorama",
+  img: "/icons/ringsOfCalamity.png",
   max: 8,
   levelable: true,
 },

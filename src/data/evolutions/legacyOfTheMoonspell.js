@@ -35,10 +35,10 @@ export const legacyOfTheMoonspellEvolutions = [
   {
     result: "Boo Roo Boolle",
     requirements: [
-      { item: "108 Bocce", level: 8 },
+      { item: "Mille Bolle Blu", level: 8 },
       { item: "Spellbinder", level: 5 },
     ],
-    consumes: ["108 Bocce"],
+    consumes: ["Mille Bolle Blu"],
   },
   {
     result: "Muramasa",
